@@ -6,7 +6,14 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:20:46 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/09 19:20:47 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:07:02 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "BitcoinExchange.hpp"
+
+int main()
+{
+    BitcoinExchange::readCSV("data.csv");
+    return (0);
+}
