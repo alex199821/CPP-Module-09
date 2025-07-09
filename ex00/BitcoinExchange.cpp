@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/09 21:21:59 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/09 22:23:00 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ std::vector<std::string> BitcoinExchange::parseCSVLine(const std::string& line) 
     std::stringstream ss(line);
     std::string field;
     std::string cell;
+
+    std::cout << "[" << line << "] ";
 
     for (char ch : line) {
         if (ch == ',') {
@@ -30,7 +32,7 @@ std::vector<std::string> BitcoinExchange::parseCSVLine(const std::string& line) 
     return result;
 }
 
-void BitcoinExchange::readCSV(const std::string& filename) {
+std::vector<std::vector<std::string>> BitcoinExchange::readCSV(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
     std::vector<std::vector<std::string>> allLines;
