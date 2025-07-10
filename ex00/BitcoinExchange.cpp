@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/10 20:42:38 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:47:08 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ bool checkIfOnlyDigits(const std::string& value)
 	if (value.empty()) return false;
 	bool dotSeen = false;
 
-	for (size_t i = 1; i < value.length(); ++i)
+	for (size_t i = 0; i < value.length(); ++i)
 	{
+		if(value[i] == ' ')
+			continue;
 		if (value[i] == '.') {
 			if (dotSeen) return false;
 			dotSeen = true;
