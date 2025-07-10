@@ -5,31 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 19:20:46 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/10 20:52:54 by auplisas         ###   ########.fr       */
+/*   Created: 2025/07/10 22:07:47 by auplisas          #+#    #+#             */
+/*   Updated: 2025/07/10 22:48:50 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
+#include "RPN.hpp"
+
+bool isOperator(char c) {
+    return c == '+' || c == '-' || c == '*' || c == '/';
+}
 
 int	main(int argc, char** argv)
 {
-	std::ifstream file(argv[1]);
-	if (!file.is_open() || argc != 2)
+	if(argc != 2)
 	{
-		std::cout << "Error: could not open file." << std::endl;
+		std::cout << "Error" << std::endl;
 		return (1);
 	}
-	std::ifstream dataFile("data.csv");
-	if (!dataFile.is_open())
-	{
-		std::cout << "Error: could not open file ./data.csv." << std::endl;
-		return (1);
-	}
-	file.close();
-	auto allCSVLines = BitcoinExchange::readFile("data.csv", ',');
-	auto allInputLines = BitcoinExchange::readFile(argv[1], '|');
-	BitcoinExchange::printResults(allCSVLines, allInputLines);
+	std::string arg = argv[1];
 
+	std::forward_list<int> digitsAr;
+	std::forward_list<char> operatorsAr; 
+	for(size_t i = 0; i < arg.size(); i++)
+	{
+		std::cout << arg[i] << std::endl;
+		if(isdigit(arg[i]))
+		{
+			digitsAr.push_front(arg[i]- '0');
+		}
+		if(isOperator(arg[i]))
+		{
+			operatorsAr.push_front(arg[i]);
+		}
+	}
+	for(size_t i = 0; i < arg.size(); i++)
+	{
+		
+	}
 	return (0);
 }
