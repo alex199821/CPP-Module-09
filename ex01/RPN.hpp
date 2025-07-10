@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:57:55 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/10 22:24:43 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/10 22:55:33 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <forward_list>
+#include <list>
+
 
 class RPN
 {
@@ -30,7 +31,7 @@ class RPN
 	RPN &operator=(const RPN &copy) = delete;
 	~RPN() = delete;
 	// bool checkValidity();
-	std::forward_list<int> parseNumbers();
-	std::forward_list<std::string> parseOperations();
+	std::list<int>  parseNumbers();
+	std::list<char>  parseOperations();
 
 };
