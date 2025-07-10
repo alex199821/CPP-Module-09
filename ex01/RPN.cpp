@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/11 01:31:00 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/11 01:33:35 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int RPN::processRpn(const std::string arg)
 		else
 		{
 			std::cout << "Error" << std::endl;
-			return (1);
+			exit(1);
 		}
 	}
 	for (size_t i = 0; i < tokens.size(); i++)
@@ -68,7 +68,7 @@ int RPN::processRpn(const std::string arg)
 			if (stack.size() < 2)
 			{
 				std::cout << "Error" << std::endl;
-				return (1);
+				exit(1);
 			}
 			b = stack.back();
 			stack.pop_back();
@@ -80,13 +80,13 @@ int RPN::processRpn(const std::string arg)
 		else
 		{
 			std::cout << "Error" << std::endl;
-			return (1);
+			exit(1);
 		}
 	}
 	if (stack.size() != 1)
 	{
 		std::cout << "Error" << std::endl;
-		return (1);
+		exit(1);
 	}
     return (stack.back());
 }
