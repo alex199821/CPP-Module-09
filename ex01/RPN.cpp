@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/11 01:33:35 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:40:30 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,15 @@ int RPN::processRpn(const std::string arg)
 
 	std::istringstream iss(arg);
 	std::string token;
-	std::vector<std::string> tokens;
 	std::deque<int> stack;
+
 	while (iss >> token)
 	{
-		if ((token.length() == 1 && isdigit(token[0])) || (token.length() == 1
-				&& RPN::isOperator(token[0])))
+		if (token.length() == 1 && isdigit(token[0]))
 		{
-			tokens.push_back(token);
+			stack.push_back(token[0] - '0');
 		}
-		else
-		{
-			std::cout << "Error" << std::endl;
-			exit(1);
-		}
-	}
-	for (size_t i = 0; i < tokens.size(); i++)
-	{
-		if (isdigit(tokens[i][0]))
-		{
-			stack.push_back(tokens[i][0] - '0');
-		}
-		else if (RPN::isOperator(tokens[i][0]))
+		else if (token.length() == 1 && RPN::isOperator(token[0]))
 		{
 			if (stack.size() < 2)
 			{
@@ -74,7 +61,7 @@ int RPN::processRpn(const std::string arg)
 			stack.pop_back();
 			a = stack.back();
 			stack.pop_back();
-			result = RPN::applyOperator(a, b, tokens[i][0]);
+			result = RPN::applyOperator(a, b, token[0]);
 			stack.push_back(result);
 		}
 		else
@@ -88,5 +75,5 @@ int RPN::processRpn(const std::string arg)
 		std::cout << "Error" << std::endl;
 		exit(1);
 	}
-    return (stack.back());
+	return (stack.back());
 }
