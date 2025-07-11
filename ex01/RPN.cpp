@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/11 13:40:30 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:57:04 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int RPN::processRpn(const std::string arg)
 
 	std::istringstream iss(arg);
 	std::string token;
-	std::deque<int> stack;
-
+	std::list<int> stack;
+	
 	while (iss >> token)
 	{
 		if (token.length() == 1 && isdigit(token[0]))
@@ -61,7 +61,7 @@ int RPN::processRpn(const std::string arg)
 			stack.pop_back();
 			a = stack.back();
 			stack.pop_back();
-			result = RPN::applyOperator(a, b, token[0]);
+			result =  RPN::applyOperator(a, b, token[0]);
 			stack.push_back(result);
 		}
 		else
