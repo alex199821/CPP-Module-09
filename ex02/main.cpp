@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:07:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/11 17:48:59 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:47:33 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-// int	main(int argc, char **argv)
-
 std::deque<int> sortTwoNumbers(std::deque<int> array)
 {
+	int	a;
+	int	b;
+
 	std::deque<int> newArray;
-	int a = array[0];
-	int b = array[1];
+	a = array[0];
+	b = array[1];
 	if (a > b)
 	{
 		newArray.push_back(b);
@@ -51,40 +52,16 @@ int	returnSmaller(int a, int b)
 std::deque<int> returnLargerArray(std::deque<int> array)
 {
 	std::deque<int> larger;
-	size_t i = 0;
-
-	while (i + 1 < array.size())
+	for (size_t i = 0; i + 1 < array.size(); i += 2)
 	{
 		larger.push_back(returnLarger(array[i], array[i + 1]));
-		i += 2;
 	}
-
-	// Handle leftover if size is odd
 	if (array.size() % 2 == 1)
 	{
 		larger.push_back(array.back());
 	}
-
-	return larger;
+	return (larger);
 }
-
-// std::deque<int> returnLargerArray(std::deque<int> array)
-// {
-// 	std::deque<int> larger;
-// 	for (size_t i = 0; i < array.size(); i=i+2)
-// 	{
-// 		if (i % 2 == 1)
-// 		{
-// 			std::cout << "Index is: " << i << std::endl;
-// 			larger.push_back(returnLarger(array[i - 1], array[i]));
-// 		}
-// 		// if (array.size() % 2 == 1 && i == array.size() - 1)
-// 		// {
-// 		// 	larger.push_back(array[i]);
-// 		// }
-// 	}
-// 	return (larger);
-// }
 
 std::deque<int> returnSmallerArray(std::deque<int> array)
 {
@@ -98,8 +75,27 @@ std::deque<int> returnSmallerArray(std::deque<int> array)
 	}
 	return (smaller);
 }
+void	insertInSorted(std::deque<int> &sortedArray, int value)
+{
+	auto index = std::lower_bound(sortedArray.begin(), sortedArray.end(), value);
+	sortedArray.insert(index, value);
+}
 
-void printArray(std::deque<int> array)
+std::deque<int> conductSort(std::deque<int> array)
+{
+	if (array.size() <= 1)
+		return (array);
+	std::deque<int> larger = returnLargerArray(array);
+	std::deque<int> smaller = returnSmallerArray(array);
+	std::deque<int> sortedLarger = conductSort(larger);
+	for (size_t i = 0; i < smaller.size(); ++i)
+	{
+		insertInSorted(sortedLarger, smaller[i]);
+	}
+	return (sortedLarger);
+}
+
+void	printArray(std::deque<int> array)
 {
 	for (size_t i = 0; i < array.size(); i++)
 	{
@@ -108,46 +104,12 @@ void printArray(std::deque<int> array)
 	std::cout << std::endl;
 }
 
-void	conductSort(std::deque<int> array, std::deque<int> smallArray)
-{
-	(void)smallArray;
-	// std::deque<int> newArray = array; 
-
-		// std::deque<int>  sortedArray = sortTwoNumbers(array);
-		// std::deque<int>  sortedSmallArray = sortTwoNumbers(smallArray);
-		printArray(array);
-		std::cout << std::endl;
-		// printArray(smallArray);
-	
-	if (array.size() == 2)
-	{
-		
-		std::deque<int>  sortedArray = sortTwoNumbers(array);
-		// std::deque<int>  sortedSmallArray = sortTwoNumbers(smallArray);
-		printArray(sortedArray);
-		std::cout << std::endl;
-		printArray(smallArray);
-
-		return;
-	}
-	else
-	{
-		std::deque<int> larger = returnLargerArray(array);
-		std::deque<int> smaller = returnSmallerArray(array);
-		conductSort(larger, smaller);
-	}
-}
-
-
 int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	std::deque<int> numbers = {43, 54, 34, 564, 99, 1, 68, 7, 56, 343};
-	std::deque<int> finalAr = {	1, 7, 34, 43, 54, 56, 68, 99, 343, 564};
-	std::deque<int> smallArray;
-	conductSort(numbers, smallArray);
-	
+	std::deque<int> numbers = {1, 7, 34, 43, 54, 56, 68, 99, 343, 564};
+	std::deque<int> newAr = conductSort(numbers);
+	printArray(newAr);
 	return (0);
 }
-
