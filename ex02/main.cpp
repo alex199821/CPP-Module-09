@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:07:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/11 21:47:33 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/12 14:29:38 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,26 @@ std::deque<int> returnSmallerArray(std::deque<int> array)
 	}
 	return (smaller);
 }
-void	insertInSorted(std::deque<int> &sortedArray, int value)
+
+void insertInSortedRecursive(std::deque<int>& sortedArray, int value, size_t left, size_t right)
 {
-	auto index = std::lower_bound(sortedArray.begin(), sortedArray.end(), value);
-	sortedArray.insert(index, value);
+	if (left >= right)
+	{
+		sortedArray.insert(sortedArray.begin() + left, value);
+		return;
+	}
+
+	size_t mid = left + (right - left) / 2;
+
+	if (value < sortedArray[mid])
+		insertInSortedRecursive(sortedArray, value, left, mid);
+	else
+		insertInSortedRecursive(sortedArray, value, mid + 1, right);
+}
+
+void insertInSorted(std::deque<int>& sortedArray, int value)
+{
+	insertInSortedRecursive(sortedArray, value, 0, sortedArray.size());
 }
 
 std::deque<int> conductSort(std::deque<int> array)
@@ -108,8 +124,14 @@ int	main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	std::deque<int> numbers = {1, 7, 34, 43, 54, 56, 68, 99, 343, 564};
+	std::deque<int> numbers = {343, 43, 34, 7, 564, 56, 68, 99, 1, 54};
 	std::deque<int> newAr = conductSort(numbers);
 	printArray(newAr);
 	return (0);
 }
+
+// void	insertInSorted(std::deque<int> &sortedArray, int value)
+// {
+// 	auto index = std::lower_bound(sortedArray.begin(), sortedArray.end(),value);
+// 	sortedArray.insert(index, value);
+// }
