@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/12 19:52:17 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/12 20:45:42 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	PmergeMe::returnSmaller(int a, int b)
 }
 
 //Sorting with deque container
-void PmergeMe::printArray(std::deque<int> array)
+void PmergeMe::dequePrintArray(std::deque<int> array)
 {
 	for (size_t i = 0; i < array.size(); i++)
 	{
@@ -39,28 +39,7 @@ void PmergeMe::printArray(std::deque<int> array)
 	std::cout << std::endl;
 }
 
-std::deque<int> PmergeMe::sortTwoNumbers(std::deque<int> array)
-{
-	int	a;
-	int	b;
-
-	std::deque<int> newArray;
-	a = array[0];
-	b = array[1];
-	if (a > b)
-	{
-		newArray.push_back(b);
-		newArray.push_back(a);
-	}
-	else
-	{
-		newArray.push_back(a);
-		newArray.push_back(b);
-	}
-	return (newArray);
-}
-
-std::deque<int> PmergeMe::returnLargerArray(std::deque<int> array)
+std::deque<int> PmergeMe::dequeReturnLargerArray(std::deque<int> array)
 {
 	std::deque<int> larger;
 	for (size_t i = 0; i + 1 < array.size(); i += 2)
@@ -75,7 +54,7 @@ std::deque<int> PmergeMe::returnLargerArray(std::deque<int> array)
 }
 
 
-std::deque<int> PmergeMe::returnSmallerArray(std::deque<int> array)
+std::deque<int> PmergeMe::dequeReturnSmallerArray(std::deque<int> array)
 {
 	std::deque<int> smaller;
 	for (size_t i = 0; i < array.size(); i++)
@@ -88,7 +67,7 @@ std::deque<int> PmergeMe::returnSmallerArray(std::deque<int> array)
 	return (smaller);
 }
 
-void	PmergeMe::insertInSorted(std::deque<int> &sortedArray, int value, size_t left,
+void	PmergeMe::dequeInsertInSorted(std::deque<int> &sortedArray, int value, size_t left,
 		size_t right)
 {
 	size_t	mid;
@@ -100,12 +79,12 @@ void	PmergeMe::insertInSorted(std::deque<int> &sortedArray, int value, size_t le
 	}
 	mid = left + (right - left) / 2;
 	if (value < sortedArray[mid])
-        PmergeMe::insertInSorted(sortedArray, value, left, mid);
+        PmergeMe::dequeInsertInSorted(sortedArray, value, left, mid);
 	else
-        PmergeMe::insertInSorted(sortedArray, value, mid + 1, right);
+        PmergeMe::dequeInsertInSorted(sortedArray, value, mid + 1, right);
 }
 
-bool PmergeMe::contains(const std::deque<size_t>& deq, size_t value) {
+bool PmergeMe::dequeContains(const std::deque<size_t>& deq, size_t value) {
     for (size_t i = 0; i < deq.size(); ++i) {
         if (deq[i] == value)
             return true;
@@ -113,7 +92,7 @@ bool PmergeMe::contains(const std::deque<size_t>& deq, size_t value) {
     return false;
 }
 
-std::deque<size_t> PmergeMe::generateJacobsthalNumbers(size_t m)
+std::deque<size_t> PmergeMe::dequeGenerateJacobsthalNumbers(size_t m)
 {
     size_t next;
     std::deque<size_t> jacobsthal = {0, 1};
@@ -127,7 +106,7 @@ std::deque<size_t> PmergeMe::generateJacobsthalNumbers(size_t m)
     return jacobsthal;
 }
 
-std::deque<size_t> PmergeMe::calculateJacobsthalIndices(size_t m)
+std::deque<size_t> PmergeMe::dequeCalculateJacobsthalIndices(size_t m)
 {
     std::deque<size_t> order;
     if (m == 0)
@@ -139,12 +118,12 @@ std::deque<size_t> PmergeMe::calculateJacobsthalIndices(size_t m)
     }
 
     std::deque<size_t> included;
-    std::deque<size_t> jacobsthal = PmergeMe::generateJacobsthalNumbers(m);
+    std::deque<size_t> jacobsthal = PmergeMe::dequeGenerateJacobsthalNumbers(m);
 
     for (size_t i = 0; i < jacobsthal.size(); ++i)
     {
         size_t index = jacobsthal[i];
-        if (index < m && !PmergeMe::contains(included, index))
+        if (index < m && !PmergeMe::dequeContains(included, index))
         {
             order.push_back(index);
             included.push_back(index);
@@ -153,7 +132,7 @@ std::deque<size_t> PmergeMe::calculateJacobsthalIndices(size_t m)
 
     for (size_t i = 0; i < m; ++i)
     {
-        if (!PmergeMe::contains(included, i))
+        if (!PmergeMe::dequeContains(included, i))
         {
             order.push_back(i);
             included.push_back(i);
@@ -162,24 +141,33 @@ std::deque<size_t> PmergeMe::calculateJacobsthalIndices(size_t m)
     return order;
 }
 
-std::deque<int> PmergeMe::conductSort(std::deque<int> array)
+std::deque<int> PmergeMe::dequeConductSort(std::deque<int> array)
 {
 	size_t	index;
 
 	if (array.size() <= 1)
 		return (array);
-	std::deque<int> larger = PmergeMe::returnLargerArray(array);
-	std::deque<int> smaller = PmergeMe::returnSmallerArray(array);
-	std::deque<int> sortedLarger = PmergeMe::conductSort(larger);
-	std::deque<size_t> insertOrder = PmergeMe::calculateJacobsthalIndices(smaller.size());
+	std::deque<int> larger = PmergeMe::dequeReturnLargerArray(array);
+	std::deque<int> smaller = PmergeMe::dequeReturnSmallerArray(array);
+	std::deque<int> sortedLarger = PmergeMe::dequeConductSort(larger);
+	std::deque<size_t> insertOrder = PmergeMe::dequeCalculateJacobsthalIndices(smaller.size());
 	for (size_t i = 0; i < insertOrder.size(); ++i)
 	{
 		index = insertOrder[i];
 		if (index >= smaller.size())
 			break ;
-        PmergeMe::insertInSorted(sortedLarger, smaller[index], 0, sortedLarger.size());
+        PmergeMe::dequeInsertInSorted(sortedLarger, smaller[index], 0, sortedLarger.size());
 	}
 	return (sortedLarger);
 }
 
+void PmergeMe::dequeStartSorting(std::deque<int> array)
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    std::deque<int> newAr = PmergeMe::dequeConductSort(array);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    PmergeMe::dequePrintArray(newAr);
+    std::cout << "Time to process a range of 5 elements with std::[..] : 0.00031 us" << duration.count() << " microseconds\n";
+}
 //Sorting with "" container
