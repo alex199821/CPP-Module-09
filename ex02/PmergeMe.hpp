@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:57:55 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/12 23:41:00 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/13 00:07:56 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <sstream>
 #include <string>
 #include <unordered_set>
-#include <vector>
+#include <forward_list>
 
 class PmergeMe
 {
@@ -45,4 +45,15 @@ class PmergeMe
 	static std::deque<size_t> dequeCalculateJacobsthalIndices(size_t m);
 	static std::deque<int> dequeConductSort(std::deque<int> array);
 	static void dequeStartSorting(std::deque<int> array);
+	//forward list Function
+	static std::forward_list<int> convertDequeToForwardList(const std::deque<int>& input);
+	static void forwardListPrintArray(std::string descriptor, const std::forward_list<int>& list);
+    static std::forward_list<int> forwardListReturnLargerArray(const std::forward_list<int>& list);
+    static std::forward_list<int> forwardListReturnSmallerArray(const std::forward_list<int>& list);
+    static void forwardListInsertInSorted(std::forward_list<int>& sorted, int value);
+    static bool forwardListContains(const std::forward_list<size_t>& list, size_t value);
+    static std::forward_list<size_t> forwardListGenerateJacobsthalNumbers(size_t m);
+    static std::forward_list<size_t> forwardListCalculateJacobsthalIndices(size_t m);
+    static std::forward_list<int> forwardListConductSort(const std::forward_list<int>& list);
+    static void forwardListStartSorting(const std::forward_list<int>& list);
 };
