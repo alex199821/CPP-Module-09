@@ -3,16 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/12 20:45:42 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/12 23:40:52 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
 //Modular Functions
+bool PmergeMe::isValidInteger(const std::string &string) {
+	if (string.empty()) 
+		return false;
+	size_t start = 0;
+	if (string[0] == '-') 
+	{
+		if (string.size() == 1) 
+			return false;
+		start = 1;
+	}
+	for (size_t i = start; i < string.size(); i++) 
+	{
+		if (!std::isdigit(string[i])) 
+			return false;
+	}
+	return true;
+}
+
+std::deque<int> PmergeMe::parseAndValidateArgs(int argc, char **argv) {
+	std::deque<int> result;
+	for (int i = 1; i < argc; i++) {
+		std::string arg = argv[i];
+		if (!PmergeMe::isValidInteger(arg)) {
+			std::cout << "Invalid arguments" << std::endl;
+			exit(1);
+		}
+		int number = std::stoi(arg);
+		result.push_back(number);
+	}
+	return result;
+}
+
 int	PmergeMe::returnLarger(int a, int b)
 {
 	if (a > b)
@@ -30,11 +62,12 @@ int	PmergeMe::returnSmaller(int a, int b)
 }
 
 //Sorting with deque container
-void PmergeMe::dequePrintArray(std::deque<int> array)
+void PmergeMe::dequePrintArray(std::string descriptor, std::deque<int> array)
 {
+	std::cout << descriptor;
 	for (size_t i = 0; i < array.size(); i++)
 	{
-		std::cout << array[i] << ",";
+		std::cout << array[i] << " ";
 	}
 	std::cout << std::endl;
 }
@@ -167,7 +200,7 @@ void PmergeMe::dequeStartSorting(std::deque<int> array)
     std::deque<int> newAr = PmergeMe::dequeConductSort(array);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    PmergeMe::dequePrintArray(newAr);
-    std::cout << "Time to process a range of 5 elements with std::[..] : 0.00031 us" << duration.count() << " microseconds\n";
+    PmergeMe::dequePrintArray("After: ", newAr);
+    std::cout << "Time to process a range of " << array.size() << " elements with std::deque : " << duration.count() << " us\n";
 }
 //Sorting with "" container

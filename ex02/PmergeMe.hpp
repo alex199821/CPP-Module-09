@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:57:55 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/12 20:34:53 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/12 23:41:00 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ class PmergeMe
 	// Modular Functions
 	static int returnLarger(int a, int b);
 	static int returnSmaller(int a, int b);
+	static bool isValidInteger(const std::string &string);
 	// deque Funcitons
-	static void dequePrintArray(std::deque<int> array);
+	static std::deque<int> parseAndValidateArgs(int argc, char **argv);
+	static void dequePrintArray(std::string descriptor, std::deque<int> array);
 	static std::deque<int> dequeReturnLargerArray(std::deque<int> array);
 	static std::deque<int> dequeReturnSmallerArray(std::deque<int> array);
-	static void dequeInsertInSorted(std::deque<int> &sortedArray, int value, size_t left,
-		size_t right);
+	static void dequeInsertInSorted(std::deque<int> &sortedArray, int value,
+		size_t left, size_t right);
 	static bool dequeContains(const std::deque<size_t> &deq, size_t value);
 	static std::deque<size_t> dequeGenerateJacobsthalNumbers(size_t m);
 	static std::deque<size_t> dequeCalculateJacobsthalIndices(size_t m);

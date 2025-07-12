@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:07:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/12 20:44:56 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/12 23:41:26 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int	main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-	std::deque<int> numbers = {343, 0, 43, 32344, 34, 7, 43, 564, 56, 68, 43, 99, 1, 54};
-	PmergeMe::dequeStartSorting(numbers);
+	if(argc < 2)
+	{
+		std::cout << "Wrong number of arguments" << std::endl;
+		return (1);
+	}
+	std::deque<int> dequeInput = PmergeMe::parseAndValidateArgs(argc, argv);
+	PmergeMe::dequePrintArray("Before: ",dequeInput);
+	PmergeMe::dequeStartSorting(dequeInput);
 	return (0);
 }
