@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:07:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/12 14:29:38 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/12 15:02:36 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ std::deque<int> returnSmallerArray(std::deque<int> array)
 	return (smaller);
 }
 
-void insertInSortedRecursive(std::deque<int>& sortedArray, int value, size_t left, size_t right)
+void insertInSorted(std::deque<int>& sortedArray, int value, size_t left, size_t right)
 {
 	if (left >= right)
 	{
@@ -87,14 +87,9 @@ void insertInSortedRecursive(std::deque<int>& sortedArray, int value, size_t lef
 	size_t mid = left + (right - left) / 2;
 
 	if (value < sortedArray[mid])
-		insertInSortedRecursive(sortedArray, value, left, mid);
+		insertInSorted(sortedArray, value, left, mid);
 	else
-		insertInSortedRecursive(sortedArray, value, mid + 1, right);
-}
-
-void insertInSorted(std::deque<int>& sortedArray, int value)
-{
-	insertInSortedRecursive(sortedArray, value, 0, sortedArray.size());
+		insertInSorted(sortedArray, value, mid + 1, right);
 }
 
 std::deque<int> conductSort(std::deque<int> array)
@@ -106,7 +101,7 @@ std::deque<int> conductSort(std::deque<int> array)
 	std::deque<int> sortedLarger = conductSort(larger);
 	for (size_t i = 0; i < smaller.size(); ++i)
 	{
-		insertInSorted(sortedLarger, smaller[i]);
+		insertInSorted(sortedLarger, smaller[i], 0, sortedLarger.size());
 	}
 	return (sortedLarger);
 }
