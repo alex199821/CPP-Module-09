@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 20:33:47 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/13 00:19:34 by macbook          ###   ########.fr       */
+/*   Updated: 2025/07/13 00:52:53 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void PmergeMe::dequeInsertInSorted(std::deque<int> &sortedArray, int value,
 
 bool PmergeMe::dequeContains(const std::deque<size_t> &deq, size_t value)
 {
-	for (size_t i = 0; i < deq.size(); ++i)
+	for (size_t i = 0; i < deq.size(); i++)
 	{
 		if (deq[i] == value)
 			return (true);
@@ -163,7 +163,7 @@ std::deque<size_t> PmergeMe::dequeCalculateJacobsthalIndices(size_t m)
 	}
 	std::deque<size_t> included;
 	std::deque<size_t> jacobsthal = PmergeMe::dequeGenerateJacobsthalNumbers(m);
-	for (size_t i = 0; i < jacobsthal.size(); ++i)
+	for (size_t i = 0; i < jacobsthal.size(); i++)
 	{
 		index = jacobsthal[i];
 		if (index < m && !PmergeMe::dequeContains(included, index))
@@ -172,7 +172,7 @@ std::deque<size_t> PmergeMe::dequeCalculateJacobsthalIndices(size_t m)
 			included.push_back(index);
 		}
 	}
-	for (size_t i = 0; i < m; ++i)
+	for (size_t i = 0; i < m; i++)
 	{
 		if (!PmergeMe::dequeContains(included, i))
 		{
@@ -193,7 +193,7 @@ std::deque<int> PmergeMe::dequeConductSort(std::deque<int> array)
 	std::deque<int> smaller = PmergeMe::dequeReturnSmallerArray(array);
 	std::deque<int> sortedLarger = PmergeMe::dequeConductSort(larger);
 	std::deque<size_t> insertOrder = PmergeMe::dequeCalculateJacobsthalIndices(smaller.size());
-	for (size_t i = 0; i < insertOrder.size(); ++i)
+	for (size_t i = 0; i < insertOrder.size(); i++)
 	{
 		index = insertOrder[i];
 		if (index >= smaller.size())
@@ -328,7 +328,7 @@ std::forward_list<size_t> PmergeMe::forwardListCalculateJacobsthalIndices(size_t
 			included.push_front(val);
 		}
 	}
-	for (size_t i = 0; i < m; ++i)
+	for (size_t i = 0; i < m; i++)
 	{
 		if (!forwardListContains(included, i))
 		{
@@ -344,26 +344,47 @@ std::forward_list<int> PmergeMe::forwardListConductSort(const std::forward_list<
 {
 	if (std::next(list.begin()) == list.end())
 		return list;
+
 	std::forward_list<int> larger = forwardListReturnLargerArray(list);
 	std::forward_list<int> smaller = forwardListReturnSmallerArray(list);
+
 	std::forward_list<int> sorted = forwardListConductSort(larger);
-	std::forward_list<size_t> order = forwardListCalculateJacobsthalIndices(std::distance(smaller.begin(),
-				smaller.end()));
-	std::vector<int> smallerVec(smaller.begin(), smaller.end());
-	for (size_t idx : order)
+	std::forward_list<size_t> order = forwardListCalculateJacobsthalIndices(std::distance(smaller.begin(), smaller.end()));
+
+	std::forward_list<int> smallerCopy;
+	for (std::forward_list<int>::const_iterator it = smaller.begin(); it != smaller.end(); it++)
+		smallerCopy.push_front(*it);
+	smallerCopy.reverse();
+
+	for (std::forward_list<size_t>::const_iterator it = order.begin(); it != order.end(); it++)
 	{
-		if (idx < smallerVec.size())
+		size_t idx = *it;
+		size_t i = 0;
+		std::forward_list<int>::const_iterator it_val = smallerCopy.begin();
+		while (i < idx && it_val != smallerCopy.end())
 		{
-			forwardListInsertInSorted(sorted, smallerVec[idx]);
+			it_val++;
+			i++;
 		}
+		if (it_val != smallerCopy.end())
+			forwardListInsertInSorted(sorted, *it_val);
 	}
+
 	return sorted;
+}
+
+void PmergeMe::forwardListPrintArray(std::string descriptor, const std::forward_list<int>& list) {
+    std::cout << descriptor;
+    for (int val : list)
+        std::cout << val << " ";
+    std::cout << "\n";
 }
 
 void PmergeMe::forwardListStartSorting(const std::forward_list<int> &list)
 {
 	auto start = std::chrono::high_resolution_clock::now();
 	std::forward_list<int> sorted = forwardListConductSort(list);
+	// forwardListPrintArray("Before: ", sorted);
 	auto end = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 	std::cout << "Time to process a range of " << std::distance(list.begin(), list.end()) << " elements with std::forward_list : " << duration.count() << " us\n";
