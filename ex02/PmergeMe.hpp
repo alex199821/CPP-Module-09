@@ -6,7 +6,7 @@
 /*   By: auplisas <auplisas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:57:55 by auplisas          #+#    #+#             */
-/*   Updated: 2025/07/11 13:42:37 by auplisas         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:33:03 by auplisas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <list>
 #include <sstream>
 #include <string>
+#include <vector>
+#include <unordered_set>
 
 class PmergeMe
 {
